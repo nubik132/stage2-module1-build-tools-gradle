@@ -4,12 +4,26 @@ plugins {
 
 repositories {
     mavenCentral() // You can use Maven Central repository for JUnit Jupiter
+    mavenLocal()
 }
 
 dependencies {
+    implementation 'org.apache.commons:commons-lang3:3.10'
+    implementation 'org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:3.3'
     implementation 'org.junit.jupiter:junit-jupiter:5.8.1'
+}
+
+jar {
+    manifest {
+        attributes(
+                'Implementation-Title': 'demo',
+                'Implementation-Version': '1.0.0'
+        )
+    }
 }
 
 test {
     useJUnitPlatform()
 }
+
+compileJava {}.dependsOn(':utils:publishToMavenLocal')
